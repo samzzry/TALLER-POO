@@ -6,4 +6,5 @@ class CarroDeportivo(Vehiculo):
     def aceleracion_frenado(self):
         print("aceleracion rapida y frenado deportivo")
     def info_extra(self):
+
         print("modo sport activo:", self.modo_sport)
