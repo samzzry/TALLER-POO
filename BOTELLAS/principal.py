@@ -1,20 +1,52 @@
+from base_datos import Base_datos
 from modelo_botella import Botella
 from modelo_botella_plastico import Botella_plastico
 from modelo_botella_vidrio import Botella_vidrio
 
-# codigo principa
 
-objBotella = Botella("Coca_Cola", "1.5L", "Especial")
-objBotella.imprimir_info()
+bd = Base_datos()
+bd.cargar_datos_iniciales()
 
-objBotella_Plastica = Botella_plastico(
-    "Pepsi", "2.5L", "Comun", "Redondo", "Plastico", "Sin tinte"
-)
-dato_botella_plastica = objBotella_Plastica.imprimir_info()
-print(dato_botella_plastica)
+while True:
+    print("crud botellas")
+    print("1. agregar botella")
+    print("2. eliminar botella")
+    print("3. mostrar botellas")
+    print("4. salir")
 
-objBotella_Vidrio = Botella_vidrio(
-    "Kola Roman", "1.5L", "Comun", "Cubo", "Vidrio", "Roja"
-)
-dato_botella_vidrio = objBotella_Vidrio.imprimir_info()
-print(dato_botella_vidrio)
+    opcion = int(input("seleccione una opcion: "))
+
+    match opcion:
+        case 1:
+            tipo = input("tipo (normal / plastico / vidrio): ")
+
+            marca = input("marca: ")
+            capacidad = input("capacidad: ")
+            tapa = input("tapa: ")
+
+            if tipo == "normal":
+                botella = Botella(marca, capacidad, tapa)
+
+            elif tipo == "plastico":
+                diseño = input("diseño: ")
+                material = input("material: ")
+                tinte = input("tinte: ")
+                botella = Botella_plastico(marca, capacidad, tapa, diseño, material, tinte)
+
+            elif tipo == "vidrio":
+                diseño = input("diseño: ")
+                material = input("material: ")
+                tinte = input("tinte: ")
+                botella = Botella_vidrio(marca, capacidad, tapa, diseño, material, tinte)
+
+            bd.agregar_botella(botella)
+
+        case 2:
+            posicion = int(input("posicion a eliminar: "))
+            bd.eliminar_por_posicion(posicion)
+
+        case 3:
+            bd.mostrar_lista()
+
+        case 4:
+            break
