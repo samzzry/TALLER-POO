@@ -1,20 +1,68 @@
+from base_datos import Base_datos
 from modelo_vehiculo import Vehiculo
 from modelo_vehiculo_deportivo import Vehiculo_deportivo
 from modelo_vehiculo_carga import Vehiculo_carga
 from modelo_vehiculo_transporte import Vehiculo_transporte
 
 
-vehiculo = Vehiculo("Ferrari", "MN678", "Negro")
-vehiculo.imprimir_info()
+bd = Base_datos()
+bd.cargar_datos_iniciales()
 
+while True:
+    print("crud vehiculos")
+    print("1. agregar vehiculo")
+    print("2. eliminar vehiculo")
+    print("3. mostrar vehiculos")
+    print("4. salir")
 
-deportivo = Vehiculo_deportivo("Lamborghini", "GTX987", "Rojo", "V12 6.5L", "LED", "Electricas")
-print(deportivo.imprimir_info())
+    opcion = int(input("seleccione una opcion: "))
 
+    match opcion:
+        case 1:
+            tipo = input("tipo (normal / deportivo / carga / transporte): ")
 
-carga = Vehiculo_carga("Chevrolet NHR", "TR909", "Blanco", 3, "Diesel")
-print(carga.imprimir_info())
+            marca = input("marca: ")
+            placa = input("placa: ")
+            color = input("color: ")
 
+            if tipo == "normal":
+                vehiculo = Vehiculo(marca, placa, color)
+                bd.agregar_vehiculo(vehiculo)
 
-transporte = Vehiculo_transporte("Mercedes Benz", "GT500", "Azul", 4, 6)
-print(transporte.imprimir_info())
+            elif tipo == "deportivo":
+                motor = input("motor: ")
+                luces = input("luces: ")
+                ventana = input("ventana: ")
+                vehiculo = Vehiculo_deportivo(
+                    marca, placa, color, motor, luces, ventana
+                )
+                bd.agregar_vehiculo(vehiculo)
+
+            elif tipo == "carga":
+                pasajeros = input("pasajeros: ")
+                combustible = input("combustible: ")
+                vehiculo = Vehiculo_carga(
+                    marca, placa, color, pasajeros, combustible
+                )
+                bd.agregar_vehiculo(vehiculo)
+
+            elif tipo == "transporte":
+                puertas = input("puertas: ")
+                llantas = input("llantas: ")
+                vehiculo = Vehiculo_transporte(
+                    marca, placa, color, puertas, llantas
+                )
+                bd.agregar_vehiculo(vehiculo)
+
+            else:
+                print("tipo no valido")
+
+        case 2:
+            posicion = int(input("posicion a eliminar: "))
+            bd.eliminar_por_posicion(posicion)
+
+        case 3:
+            bd.mostrar_lista()
+
+        case 4:
+            break
